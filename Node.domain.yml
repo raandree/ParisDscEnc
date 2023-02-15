@@ -1,0 +1,29 @@
+NodeName: '[x= { $Node.Name } =]'
+Environment: '[x= { $File.Directory.BaseName } =]'
+Role: DomainController
+Description: '[x= "$($Node.Role) in $($Node.Environment)" =]'
+
+Configurations:
+  - AddsDomain
+
+AddsDomain:
+  DomainFqdn: '[x= { $Datum.Global.EduVars.DomainName } =]'
+  DomainName: '[x= { $Datum.Global.EduVars.DomainName.split(".")[0] } =]'
+  DomainAdministrator: '[x= { $Datum.Global.EduVars.DomainAdminCredential } =]' #  <----------------------------- Here are the credentials
+  SafeModeAdministratorPassword: '[x= { $Datum.Global.EduVars.DomainAdminCredential } =]'
+  DatabasePath: D:\Windows\NTDS
+  LogPath: C:\Windows\Logs
+  SysvolPath: D:\Windows\SYSVOL
+  ForceRebootBefore: True
+  DependsOn:
+    - '[Disk]1::[Disks]Disks'
+    - '[x= { "[Computer]Computer" + $Node.Name.split(".")[0] + "::[ComputerSettings]ComputerSettings" } =]'
+
+
+DscTagging:
+  Layers:
+    - '[x={ Get-DatumSourceFile -Path $File } =]'
+
+PSDscAllowPlainTextPassword: True #Autorise les mot de passe à être en clair dans les MOFs
+CertificateFile: '[x= { ".\PublicKeys\" + $Node.Name + ".cer" } =]' #  <----------------------------- Here is the encryption cert
+PSDscAllowDomainUser: True
