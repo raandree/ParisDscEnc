@@ -1,0 +1,9 @@
+Configurations:
+  - AddsDomainController
+
+AddsDomainController:
+  SiteName: Site-HE
+
+DscTagging:
+  Layers:
+    - '[x={ Get-DatumSourceFile -Path $File } =]'

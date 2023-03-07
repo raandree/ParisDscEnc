@@ -1,0 +1,112 @@
+ResolutionPrecedence:
+  - AllNodes\$($Node.Environment)\$($Node.NodeName)
+  - Environment\$($Node.Environment)
+  - Locations\$($Node.Location)
+  - Roles\$($Node.Role)
+#  - Baselines\Security
+  - Baselines\$($Node.Baseline)
+  - Baselines\DscLcm
+
+DatumHandlersThrowOnError: true
+DatumHandlers:
+  Datum.ProtectedData::ProtectedDatum:
+    CommandOptions:
+      PlainTextPassword: SomeSecret
+      #Certificate: 1c1bbe3e12d12381b7a8083bdde8f7f14ecc009f 
+  Datum.InvokeCommand::InvokeCommand:
+    SkipDuringLoad: true
+
+DscLocalConfigurationManagerKeyName: LcmConfig
+
+default_lookup_options: MostSpecific
+
+lookup_options:
+  Configurations:
+    merge_basetype_array: Unique
+
+  Baseline:
+    merge_hash: deep
+
+  DscTagging:
+    merge_hash: deep
+  DscTagging\Layers:
+    merge_basetype_array: Unique
+
+  AddsWaitForDomains:
+    merge_hash: deep
+  AddsWaitForDomains\Domains:
+    merge_baseType_array: Unique
+    merge_hash_array: DeepTuple
+    merge_options:
+      tuple_keys:
+        - DomainName
+        #- Credential
+
+  WindowsFeatures:
+    merge_hash: deep
+
+  WindowsFeatures\Names:
+    merge_basetype_array: Unique
+
+  FilesAndFolders:
+    merge_hash: deep
+  FilesAndFolders\Items:
+    merge_hash_array: UniqueKeyValTuples
+    merge_options:
+      tuple_keys:
+        - DestinationPath
+
+  RegistryValues:
+    merge_hash: deep
+  RegistryValues\Values:
+    merge_hash_array: UniqueKeyValTuples
+    merge_options:
+      tuple_keys:
+        - Key
+        - ValueName
+
+  NetworkIpConfiguration:
+    merge_hash: deep
+
+  ComputerSettings:
+    merge_hash: deep
+
+  LcmConfig:
+    merge_hash: deep
+  LcmConfig\Settings:
+    merge_hash: deep
+  LcmConfig\ReportServerWeb: deep
+  LcmConfig\ConfigurationRepositoryWeb:
+    merge_hash: deep
+  LcmConfig\ConfigurationRepositoryWeb\Server:
+    merge_hash: deep
+    
+  WindowsServices:
+    merge_hash: deep
+  WindowsServices\Services:
+    merge_hash_array: UniqueKeyValTuples
+    merge_options:
+      tuple_keys:
+        - Name
+
+  AddsDomainController:
+    merge_hash: Hash
+
+  Scripts:
+    merge_hash: deep
+  Scripts\Items:
+    merge_hash_array: UniqueKeyValTuples
+    merge_options:
+      tuple_keys:
+        - Name
+
+  FirewallRules:
+    merge_hash: deep
+
+  SoftwarePackages:
+    merge_hash: deep
+  SoftwarePackages\Packages: 
+    merge_hash_array: UniqueKeyValTuples
+    merge_options:
+      tuple_keys:
+        - Name

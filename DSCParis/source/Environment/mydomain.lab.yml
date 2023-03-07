@@ -1,0 +1,5 @@
+
+DscTagging:
+  Environment: '[x={ $Node.Environment } =]'
+  Layers:
+    - '[x={ Get-DatumSourceFile -Path $File } =]'

@@ -1,0 +1,47 @@
+Configurations:
+  - WindowsFeatures
+  - OpticalDiskDrives
+  - Disks
+
+#Installer toutes les features requises par le DC
+WindowsFeatures:
+  Names:
+    - FileAndStorage-Services
+    - File-Services
+    - FS-FileServer
+    - Storage-Services
+    - DNS
+    - RSAT-Feature-Tools
+    - RSAT-SNMP
+    - RSAT-Role-Tools
+    - RSAT-AD-AdminCenter
+    - RSAT-DNS-Server
+    - GPMC
+    - Windows-Server-Backup
+    - SNMP-Service
+    - SNMP-WMI-Provider
+
+#Attribuer la lettre Z au lecteur CD
+OpticalDiskDrives:
+  DependsOn: '[WindowsFeatures]WindowsFeatures'
+  Drives:
+    - DiskId: 1
+      DriveLetter: Z
+      Ensure: Present
+
+#Monter le deuxieme disque en lui attribuant la lettre D pour stocker les données de l'AD
+Disks:
+  DependsOn: '[OpticalDiskDriveLetter]optDiskDrive1::[OpticalDiskDrives]OpticalDiskDrives'
+  Disks:
+    - DiskId:             1
+      DiskIdType:         Number
+      DriveLetter:        D
+      PartitionStyle:     MBR
+      FSLabel:            DATA
+      Size:               39GB
+      AllocationUnitSize: 4096
+      FSFormat:           NTFS
+
+DscTagging:
+  Layers:
+    - '[x={ Get-DatumSourceFile -Path $File } =]'

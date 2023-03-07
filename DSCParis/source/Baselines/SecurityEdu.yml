@@ -1,0 +1,9 @@
+Configurations:
+  - FilesAndFolders
+
+
+#Creer les repertoires necessaires
+FilesAndFolders:
+  Items:
+    - DestinationPath: C:\Temp
+      Type: Directory
