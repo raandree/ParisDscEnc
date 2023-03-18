@@ -4,3 +4,4 @@ output/*
 output/RequiredModules/*
 
 !output/RequiredModules/Sampler.DscPipeline
+!output/RequiredModules/Datum
