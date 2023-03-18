@@ -18,6 +18,7 @@ BuildWorkflow:
 
   build:
     - Init
+    - SetVariables
     - Clean
     - LoadDatumConfigData
     #- TestConfigData
@@ -97,8 +98,8 @@ TaskHeader: |
 
 Sampler.DscPipeline:
   DscCompositeResourceModules:
-  - Name: PSDesiredStateConfiguration
-    Version: 1.2
+  #- Name: PSDesiredStateConfiguration
+  #  Version: 1.2
   - CommonTasks
   #- Name: CommonTasks
   #  Version: 0.3.259
