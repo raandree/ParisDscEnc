@@ -256,7 +256,10 @@ function Get-FilteredConfigurationData
     }
 
     $CurrentJobNumber--
-    $allDatumNodes = Split-Array -List $allDatumNodes -ChunkCount $TotalJobCount
+    if ($TotalJobCount -gt 1)
+    {
+        $allDatumNodes = Split-Array -List $allDatumNodes -ChunkCount $TotalJobCount
+    }
     $allDatumNodes = $allDatumNodes[$CurrentJobNumber]
 
     return @{
