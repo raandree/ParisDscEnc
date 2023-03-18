@@ -46,7 +46,7 @@ LcmConfig:
     RebootNodeIfNeeded: true
     ActionAfterReboot: ContinueConfiguration
     AllowModuleOverwrite: true
-    CertificateID: '[x={ (New-Object System.Security.Cryptography.X509Certificates.X509Certificate2 "C:\Temp\DSCParis\publicKeys\$($Node.Name).cer").Thumbprint } =]' #Empreinte du certificat qui sera utilisé pour déchiffrer les credential dans le MOF (Certificat du noeud)
+    CertificateID: '[x={ (New-Object System.Security.Cryptography.X509Certificates.X509Certificate2 "$ProjectPath\publicKeys\$($Node.Name).cer").Thumbprint } =]' #Empreinte du certificat qui sera utilisé pour déchiffrer les credential dans le MOF (Certificat du noeud)
     ConfigurationMode: ApplyAndMonitor
     ConfigurationModeFrequencyMins: 15
   ConfigurationRepositoryWeb:
