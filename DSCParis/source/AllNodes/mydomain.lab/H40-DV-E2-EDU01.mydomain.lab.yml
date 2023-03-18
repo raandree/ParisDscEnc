@@ -29,6 +29,6 @@ DscTagging:
   Layers:
     - '[x={ Get-DatumSourceFile -Path $File } =]'
 
-PSDscAllowPlainTextPassword: True #Autorise les mot de passe à être en clair dans les MOFs
-#CertificateFile: '[x= { ".\PublicKeys\" + $Node.Name + ".cer" } =]'
+PSDscAllowPlainTextPassword: False #Autorise les mot de passe à être en clair dans les MOFs
+CertificateFile: '[x= { "$ProjectPath\PublicKeys\$($Node.Name).cer" } =]'
 PSDscAllowDomainUser: True
