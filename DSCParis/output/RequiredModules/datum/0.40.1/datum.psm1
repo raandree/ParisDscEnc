@@ -567,6 +567,8 @@ function Invoke-DatumHandler
 
                     # Populate the Command's params with what's in the Datum.yml, or from variables
                     $variables = Get-Variable
+                    $environmentVariables = dir -Path env:
+
                     foreach ($paramName in $actionCommand.Parameters.Keys)
                     {
                         if ($paramName -in $commandOptions)
@@ -574,6 +576,10 @@ function Invoke-DatumHandler
                             $actionParams.Add($paramName, $DatumHandlers.$handler.CommandOptions[$paramName])
                         }
                         elseif ($var = $Variables.Where{ $_.Name -eq $paramName })
+                        {
+                            $actionParams."$paramName" = $var[0].Value
+                        }
+                        elseif ($var = $environmentVariables.Where{ $_.Name -eq $paramName })
                         {
                             $actionParams."$paramName" = $var[0].Value
                         }
